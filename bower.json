@@ -1,0 +1,26 @@
+{
+  "name": "kep",
+  "description": "Knowledge exchange platform",
+  "main": "app.js",
+  "authors": [
+    "fandanping AfterWin"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "nodejs",
+    "jquery",
+    "bootstrap"
+  ],
+  "homepage": "https://github.com/fandanping/kep",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "static/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}

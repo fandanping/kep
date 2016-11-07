@@ -1,0 +1,31 @@
+{
+  "name": "kep",
+  "version": "1.0.0",
+  "description": "Knowledge exchange platform",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fandanping/kep.git"
+  },
+  "keywords": [
+    "nodejs",
+    "jquery",
+    "bootstrap"
+  ],
+  "author": "fandanping AfterWin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fandanping/kep/issues"
+  },
+  "homepage": "https://github.com/fandanping/kep#readme",
+  "dependencies": {
+    "express3-handlebars": "^0.5.2",
+    "body-parser": "^1.15.2",
+    "express-session": "^1.14.1",
+    "express": "^4.14.0",
+    "mysql": "^2.12.0"
+  }
+}
