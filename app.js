@@ -8,14 +8,14 @@ app.set('port', process.env.PORT || 3000);
 
 //设置handlebars视图引擎，并设置main.handlebars为默认模板
 var handlebars =require('express3-handlebars').create({
-    defaultLayout:'main'
-    /*helpers: {
+    defaultLayout:'main',
+    helpers: {
         section: function(name, options){
             if(!this._sections) this._sections = {};
             this._sections[name] = options.fn(this);
             return null;
         }
-    }*/
+    }
 });
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
