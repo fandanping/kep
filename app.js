@@ -5,6 +5,11 @@ app.use(require('body-parser')());
 var session = require('express-session');
 app.set('port', process.env.PORT || 3000);
 
+//routes
+var index = require('./routes/index');
+var user = require('./routes/user');
+var topic = require('./routes/topic');
+
 
 //设置handlebars视图引擎，并设置main.handlebars为默认模板
 var handlebars =require('express3-handlebars').create({
@@ -29,9 +34,10 @@ app.use(session({
 //配置静态资源
 app.use(express.static(__dirname+'/static'));
 
-app.get('/', function(req, res){
-    res.render("index");
-})
+//routes
+app.use('/', index);
+app.use('/user', user);
+app.use('/topic', topic);
 
 //定制404页面
 app.use(function(req, res){
