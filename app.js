@@ -33,7 +33,6 @@ app.get('/', function(req, res){
     res.render("index");
 })
 
-
 //定制404页面
 app.use(function(req, res){
     //res.type('text/plain');
