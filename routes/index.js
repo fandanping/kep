@@ -18,4 +18,9 @@ router.get('/register', function(req, res){
     res.render("register");
 })
 
+//执行注册
+router.post('/register', C.doRegister)
+//执行登录
+router.post('/login', C.doLogin)
+
 module.exports = router;
