@@ -7,6 +7,7 @@
     })
 {{/section}}
 <div class="container container-detail">
+    {{#each topic}}
     <div class="row">
         <div class="col-md-9">
             <ol class="breadcrumb">
@@ -16,21 +17,14 @@
             </ol>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title topic-title">JSpapa收藏助手 · 轻轻一点，papa收藏^-^！</h3>
-                    <small class="panel-small topic-small">发布于 2016/10/27 15:15   196浏览   3回复</small>
+
+                    <h3 class="panel-title topic-title">{{title}}</h3>
+                    <small class="panel-small topic-small">发布于{{create_time}}  {{page-view}}浏览   {{reply_num}}回复</small>
+
                 </div>
                 <div class="panel-body">
                     <p>
-                        JSpapa收藏助手 发布了！
-
-                        技术宅需要经常浏览各个技术网站，查找资料，但是，你肯定想轻松把这些内容都收藏起来以便日后查看！
-
-                        JSpapa收藏助手 解决你的问题！使用简单，绿色无污染！赶快来体验吧！
-
-                        使用方法
-                        1. 按住右侧边栏的 【收藏到JSpapa】按钮 并把它拖到书签栏 --->最右边
-
-                        找不到书签栏？请使用快捷键Ctrl+Shift+B或者按照图示打开：
+                       {{content}}
                     </p>
                 </div>
                 <div class="panel-footer text-right">
@@ -143,4 +137,5 @@
             </div>
         </div>
     </div>
+    {{/each}}
 </div>
