@@ -34,6 +34,12 @@ app.use(session({
 //配置静态资源
 app.use(express.static(__dirname+'/static'));
 
+//全局变量里存储user信息中间件
+app.use(function(req, res, next){
+    res.locals.user = req.session.user;
+    next();
+});
+
 //routes
 app.use('/', index);
 app.use('/user', user);

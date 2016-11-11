@@ -15,7 +15,6 @@ module.exports = {
                     return next(err);
                 }
                 data.statistic = JSON.parse(results);
-                console.log(JSON.stringify(data))
                 res.render('index', data);
             })
         })
@@ -49,7 +48,6 @@ module.exports = {
                 user.passWord = rs.password;
                 user.id = rs.id;
                 req.session.user = user;
-                console.log(req.session.user)
                 res.redirect('/user/'+req.body.username);
             }else{
                 res.render('login', {msg: '用户名或密码错误'});

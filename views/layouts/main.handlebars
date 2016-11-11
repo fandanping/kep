@@ -35,8 +35,20 @@
                     <li><a href="#">其他</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/login">登录</a></li>
-                    <li><a href="/register">注册</a></li>
+                    {{#if user}}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user.userName}}<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">个人中心</a></li>
+                                <li><a href="#">用户设置</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">退出</a></li>
+                            </ul>
+                        </li>
+                    {{else}}
+                        <li><a href="/login">登录</a></li>
+                        <li><a href="/register">注册</a></li>
+                    {{/if}}
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div>
