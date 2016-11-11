@@ -14,7 +14,13 @@ module.exports = {
                 if(err){
                     return next(err);
                 }
-                data.statistic = JSON.parse(results);
+                var rs = JSON.parse(results)[0];
+                var statistic = {
+                    userCount: rs.totalcommunity,
+                    topicCount: rs.totaltposts,
+                    commentCount: rs.totalreplies
+                }
+                data.statistic = statistic;
                 res.render('index', data);
             })
         })
