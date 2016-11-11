@@ -25,7 +25,6 @@ module.exports = {
                 }
             }
         }
-        console.log(uuid.join(''));
         return uuid.join('');
     }
 };
