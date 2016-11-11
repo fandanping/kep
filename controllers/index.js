@@ -9,7 +9,18 @@ module.exports = {
             if(err){
                 return next(err);
             }
-            data.topic = JSON.parse(results);
+            var rs = JSON.parse(results);
+            var topicList = [];
+            rs.forEach(function(el){
+                topicList.push({
+                    id: el.id,
+                    title: el.title,
+                    pageView: el.page_view,
+                    replyNum: el.reply_num,
+                    userName: el.user_name
+                })
+            })
+            data.topicList = topicList;
             dbUtils.execute(sql.SELECT_STATISTIC, null, function(err, results){
                 if(err){
                     return next(err);
@@ -53,6 +64,7 @@ module.exports = {
                 user.userName = rs.user_name;
                 user.passWord = rs.password;
                 user.id = rs.id;
+                user.signature = rs.signature;
                 req.session.user = user;
                 res.redirect('/user/'+req.body.username);
             }else{

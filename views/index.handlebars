@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-9">
             <ol class="breadcrumb">
-                <li><a href="index.html"><span class="glyphicon glyphicon-home"></span></a></li>
+                <li><a href="/"><span class="glyphicon glyphicon-home"></span></a></li>
                 <li class="active">全部</li>
             </ol>
             {{#unless user}}
@@ -13,86 +13,24 @@
             {{/unless}}
             <div class="panel panel-default">
                 <ul class="list-group topic-list">
+                    {{#each topicList}}
                     <li class="list-group-item clearfix">
-                        <a href="javascript:;" class="pull-left img-wrapper">
+                        <a href="/user/{{userName}}" class="pull-left img-wrapper">
                             <img src="/img/photo.gif" width="30" height="30">
                         </a>
                         <div class="pull-left category-wrapper">
                             <a href="javascript:;" class="btn btn-default btn-xs">HTML/CSS</a>
                         </div>
                         <div class="pull-left">
-                            <a href="javascript:;">
-                                嘿！在JSpapa混你需要知道的几个技巧！
+                            <a href="/topic/show/{{id}}">
+                                {{title}}
                             </a>
                         </div>
                         <div class="pull-right">
-                            <span class="label label-info">100浏览 0回复</span>
+                            <span class="label label-info">{{pageView}}浏览 {{replyNum}}回复</span>
                         </div>
                     </li>
-                    <li class="list-group-item clearfix">
-                        <a href="javascript:;" class="pull-left img-wrapper">
-                            <img src="/img/photo.gif" width="30" height="30">
-                        </a>
-                        <div class="pull-left category-wrapper">
-                            <a href="javascript:;" class="btn btn-default btn-xs">HTML/CSS</a>
-                        </div>
-                        <div class="pull-left">
-                            <a href="javascript:;">
-                                嘿！在JSpapa混你需要知道的几个技巧！
-                            </a>
-                        </div>
-                        <div class="pull-right">
-                            <span class="label label-info">100浏览 0回复</span>
-                        </div>
-                    </li>
-                    <li class="list-group-item clearfix">
-                        <a href="javascript:;" class="pull-left img-wrapper">
-                            <img src="/img/photo.gif" width="30" height="30">
-                        </a>
-                        <div class="pull-left category-wrapper">
-                            <a href="javascript:;" class="btn btn-default btn-xs">HTML/CSS</a>
-                        </div>
-                        <div class="pull-left">
-                            <a href="javascript:;">
-                                嘿！在JSpapa混你需要知道的几个技巧！
-                            </a>
-                        </div>
-                        <div class="pull-right">
-                            <span class="label label-info">100浏览 0回复</span>
-                        </div>
-                    </li>
-                    <li class="list-group-item clearfix">
-                        <a href="javascript:;" class="pull-left img-wrapper">
-                            <img src="/img/photo.gif" width="30" height="30">
-                        </a>
-                        <div class="pull-left category-wrapper">
-                            <a href="javascript:;" class="btn btn-default btn-xs">HTML/CSS</a>
-                        </div>
-                        <div class="pull-left">
-                            <a href="javascript:;">
-                                嘿！在JSpapa混你需要知道的几个技巧！
-                            </a>
-                        </div>
-                        <div class="pull-right">
-                            <span class="label label-info">100浏览 0回复</span>
-                        </div>
-                    </li>
-                    <li class="list-group-item clearfix">
-                        <a href="javascript:;" class="pull-left img-wrapper">
-                            <img src="/img/photo.gif" width="30" height="30">
-                        </a>
-                        <div class="pull-left category-wrapper">
-                            <a href="javascript:;" class="btn btn-default btn-xs">HTML/CSS</a>
-                        </div>
-                        <div class="pull-left">
-                            <a href="javascript:;">
-                                嘿！在JSpapa混你需要知道的几个技巧！
-                            </a>
-                        </div>
-                        <div class="pull-right">
-                            <span class="label label-info">100浏览 0回复</span>
-                        </div>
-                    </li>
+                        {{/each}}
                 </ul>
             </div>
             <nav>
