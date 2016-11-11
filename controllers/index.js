@@ -31,7 +31,7 @@ module.exports = {
                     if(err){
                         return next(err);
                     }
-                    res.redirect('login');
+                    res.redirect('/login');
                 })
             }
         })
