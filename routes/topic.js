@@ -12,5 +12,4 @@ router.get('/create', function(req, res){
 router.get('/edit/:id', function(req, res){
     res.render("add-topic");
 })
-
 module.exports = router;

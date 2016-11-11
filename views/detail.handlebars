@@ -38,6 +38,7 @@
                 </div>
                 <div class="panel-body">
                     <ul class="media-list">
+                        {{#commentList}}
                         <li class="media">
                             <div class="media-left">
                                 <a href="javascript:;">
@@ -46,57 +47,24 @@
                             </div>
                             <div class="media-body">
                                 <h5  class="media-heading">
-                                    <a href="javascript:;">zhengchj1023</a>
-                                    <span>2016/9/28 14:55</span>
+                                    <a href="javascript:;">{{userName}}</a>
+                                    <span>{{createTime}}</span>
                                     <div class="pull-right">
-                                        <span>1 楼</span>
+                                        <span>{{addOne @index}} 楼</span>
                                         <a href="javascript:;" data-toggle="tooltip" data-original-title="回复">
                                             <span class="glyphicon glyphicon-share-alt"></span>
                                         </a>
-
                                     </div>
                                 </h5>
                                 <div class="content">
                                     <p>
-                                        标题：收藏到JSpapa 内容： javascript:JSpapaEle=document.createElement("script");JSpapaEle.setAttribute("src","http://jspapa.com/js/web-collect.js?v="+Date.now());document.body.appendChild(JSpapaEle);
-
-                                        然后保存。
-
-                                        2 浏览网页的时候，如果觉得内容不错想保存起来，就点书签->收藏到JSpapa，就会弹出收藏页面，没问题就点保存即可！！
+                                       {{content}}
                                     </p>
                                 </div>
                             </div>
                         </li>
                         <hr>
-                        <li class="media">
-                            <div class="media-left">
-                                <a href="javascript:;">
-                                    <img src="img/photo.gif" width="30" height="30">
-                                </a>
-                            </div>
-                            <div class="media-body">
-                                <h5  class="media-heading">
-                                    <a href="javascript:;">zhengchj1023</a>
-                                    <span>2016/9/28 14:55</span>
-                                    <div class="pull-right">
-                                        <span>2 楼</span>
-                                        <a href="javascript:;" data-toggle="tooltip" data-original-title="回复">
-                                            <span class="glyphicon glyphicon-share-alt"></span>
-                                        </a>
-
-                                    </div>
-                                </h5>
-                                <div class="content">
-                                    <p>
-                                        标题：收藏到JSpapa 内容： javascript:JSpapaEle=document.createElement("script");JSpapaEle.setAttribute("src","http://jspapa.com/js/web-collect.js?v="+Date.now());document.body.appendChild(JSpapaEle);
-
-                                        然后保存。
-
-                                        2 浏览网页的时候，如果觉得内容不错想保存起来，就点书签->收藏到JSpapa，就会弹出收藏页面，没问题就点保存即可！！
-                                    </p>
-                                </div>
-                            </div>
-                        </li>
+                        {{/commentList}}
                         <hr>
                     </ul>
                 </div>
@@ -108,31 +76,40 @@
                 <div class="panel-body">
                     <form>
                         <div class="form-group">
-                            <textarea  class="form-control" placeholder="请输入内容..." rows="10"></textarea>
+                            <textarea  class="form-control" placeholder="请输入内容..." rows="10" name="commentInfo" name="commentInfo"></textarea>
                         </div>
+                        <input type="hidden" value="{{topic.id}}" name="topicId" />
                         <a href="javascript:;" class="btn btn-primary pull-right">提交</a>
                     </form>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
-            {{> mod-personal-info}}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">发布者</h3>
+                </div>
+                <div class="panel-body">
+                    <a class="avatar" href="javascript:;">
+                        <img src="img/photo.gif" width="50" height="50">
+                        <strong>{{topic.userName}}</strong>
+                    </a>
+                    <p class="sign text-center"><a href="javascript:;">{{topic.signature}}</a></p>
+                </div>
+            </div>
             {{> mod-add-topic}}
             <div class="panel panel-default">
+
                 <div class="panel-heading">
                     <h3 class="panel-title">作者其他话题</h3>
                 </div>
+                {{#otherTopicList}}
                 <ul class="list-group">
                     <li class="list-group-item">
-                        <a href="javascript:;">如何学习React</a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="javascript:;">如何学习React</a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="javascript:;">如何学习React</a>
+                        <a href="/topic/show/{{id}}">{{title}}</a>
                     </li>
                 </ul>
+                {{/otherTopicList}}
             </div>
         </div>
     </div>
