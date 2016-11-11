@@ -8,11 +8,9 @@
                 <li><a href="index.html"><span class="glyphicon glyphicon-home"></span></a></li>
                 <li class="active">全部</li>
             </ol>
-            <div class="panel panel-default">
-                <div class="panel-body text-center">
-                    请 <a href="javascript:;" class="btn btn-success btn-xs">登录</a> 后进行发帖/回复，如果没有账号请 <a href="javascript:;" class="btn btn-danger btn-xs">注册</a> 一起来玩吧！
-                </div>
-            </div>
+            {{#unless user}}
+            {{> mod-login-tip}}
+            {{/unless}}
             <div class="panel panel-default">
                 <ul class="list-group topic-list">
                     <li class="list-group-item clearfix">

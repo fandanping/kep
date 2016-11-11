@@ -7,6 +7,12 @@ module.exports = {
                 res.redirect("/login");
             }
         });
-
+    },
+    isLogin: function(req, res, next){
+        if(!req.session.user){
+            res.redirect("/login");
+            return false;
+        }
+        next();
     }
 }
