@@ -3,10 +3,13 @@ var sql = require('../sqlmapping/topic-sql.js');
 
 
 module.exports = {
-    showTopicDetail: function(req, res){
+    showTopicDetail: function(req, res,next){
         var id=req.params.id;
         var data = {};
         dbUtils.execute(sql.SELECT_TOPIC,[id], function(err, results){
+            if(err){
+                return next(err);
+            }
             var temp = JSON.parse(results)[0];
             var topic={};
             topic.id = temp.id;
