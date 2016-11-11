@@ -2,9 +2,7 @@
     <link rel="stylesheet" href="/styles/detail.css"/>
 {{/section}}
 {{#section 'js'}}
-    $(function(){
-        $('[data-toggle="tooltip"]').tooltip();
-    })
+    <script src="/scripts/detail.js"></script>
 {{/section}}
 <div class="container container-detail">
     <div class="row">
@@ -32,6 +30,7 @@
                     </a>
                 </div>
             </div>
+            {{#if commentList}}
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span><span>回复</span></h3>
@@ -52,7 +51,7 @@
                                     <div class="pull-right">
                                         <span>{{addOne @index}} 楼</span>
                                         <a href="javascript:;" data-toggle="tooltip" data-original-title="回复">
-                                            <span class="glyphicon glyphicon-share-alt"></span>
+                                            <span href="#content" data-reply-user="{{userName}}" class="glyphicon glyphicon-share-alt"></span>
                                         </a>
                                     </div>
                                 </h5>
@@ -69,20 +68,25 @@
                     </ul>
                 </div>
             </div>
+            {{/if}}
+            {{#if user}}
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title"><span class="glyphicon glyphicon-plus"></span><span>添加新回复</span></h3>
                 </div>
                 <div class="panel-body">
-                    <form>
+                    <form method="post" action="/topic/addComment">
                         <div class="form-group">
-                            <textarea  class="form-control" placeholder="请输入内容..." rows="10" name="commentInfo" name="commentInfo"></textarea>
+                            <textarea id="content"  class="form-control" placeholder="请输入内容..." rows="10" name="content"></textarea>
                         </div>
                         <input type="hidden" value="{{topic.id}}" name="topicId" />
-                        <a href="javascript:;" class="btn btn-primary pull-right">提交</a>
+                        <button type="submit" class="btn btn-primary pull-right">提交</button>
                     </form>
                 </div>
             </div>
+            {{else}}
+            {{> mod-login-tip}}
+            {{/if}}
         </div>
         <div class="col-md-3">
             <div class="panel panel-default">

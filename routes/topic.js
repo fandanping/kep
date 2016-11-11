@@ -12,4 +12,6 @@ router.get('/create', function(req, res){
 router.get('/edit/:id', function(req, res){
     res.render("add-topic");
 })
+//新增回复
+router.post('/addComment', C.addComment)
 module.exports = router;

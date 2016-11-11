@@ -1,5 +1,6 @@
 var dbUtils = require('../utils/dbUtils.js');
 var sql = require('../sqlmapping/topic-sql.js');
+var UUIDUtils = require('../utils/UUIDUtils.js');
 
 
 module.exports = {
@@ -56,7 +57,14 @@ module.exports = {
                     res.render('detail', data);
                 })
             })
-
+        })
+    },
+    addComment: function(req, res){
+        dbUtils.execute(sql.INSERT_COMMENT,[UUIDUtils.generateUUID(),req.body.content,req.body.topicId,req.session.user.id,new Date()],function(err, results){
+            if(err){
+                return next(err);
+            }
+            res.redirect('/topic/show/'+req.body.topicId);
         })
     }
 }
