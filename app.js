@@ -20,6 +20,7 @@ var handlebars =require('express3-handlebars').create({
             this._sections[name] = options.fn(this);
             return null;
         },
+        //新增辅助方法，作用：索引值加1
         addOne: function(index){
             //利用+1的时机，在父级循环对象中添加一个_index属性，用来保存父级每次循环的索引
             this._index = index+1;
@@ -28,13 +29,6 @@ var handlebars =require('express3-handlebars').create({
         }
     }
 });
-/*//新增辅助方法，作用：索引值加1
-handlebars.registerHelper("addOne",function(index){
-    //利用+1的时机，在父级循环对象中添加一个_index属性，用来保存父级每次循环的索引
-    this._index = index+1;
-    //返回+1之后的结果
-    return this._index;
-});*/
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 app.use(session({
