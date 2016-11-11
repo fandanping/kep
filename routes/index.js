@@ -4,7 +4,7 @@ var C = require('../controllers/index.js');
 
 
 //首页
-router.get('/', C.getIndexData);
+router.get('/', C.showIndex);
 //首页分类切换
 router.get('/category/:name', function(req, res){
     res.render("index");

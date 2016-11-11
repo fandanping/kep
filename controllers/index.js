@@ -3,7 +3,7 @@ var sql = require('../sqlmapping/index-sql.js');
 
 
 module.exports = {
-    getIndexData: function(req, res){
+    showIndex: function(req, res){
         var data = {};
         dbUtils.execute(sql.SELECT_TOPIC_LIST, null, function(err, results){
             data.topic = JSON.parse(results);

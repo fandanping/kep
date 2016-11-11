@@ -3,7 +3,7 @@ var router = express.Router();
 var C = require('../controllers/topic.js');
 
 //主题详细信息
-router.get('/show/:id', C.getIndexData);
+router.get('/show/:id', C.showTopicDetail);
 //新增主题
 router.get('/create', function(req, res){
     res.render("add-topic");
