@@ -12,6 +12,7 @@
             {{> mod-login-tip}}
             {{/unless}}
             <div class="panel panel-default">
+                {{#if topicList}}
                 <ul class="list-group topic-list">
                     {{#each topicList}}
                     <li class="list-group-item clearfix">
@@ -32,8 +33,13 @@
                             <span class="label label-info">{{pageView}}浏览 {{replyNum}}回复</span>
                         </div>
                     </li>
-                        {{/each}}
+                    {{/each}}
                 </ul>
+                {{else}}
+                <div class="panel-body">
+                    <div class="alert alert-warning" role="alert">暂无数据</div>
+                </div>
+                {{/if}}
             </div>
             <nav>
                 <ul class="pagination">
