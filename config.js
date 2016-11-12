@@ -18,6 +18,5 @@ var config = {
         'db': '数据库',
         'other': '其他'
     }
-
 }
 module.exports = config;

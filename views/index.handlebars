@@ -6,7 +6,7 @@
         <div class="col-md-9">
             <ol class="breadcrumb">
                 <li><a href="/"><span class="glyphicon glyphicon-home"></span></a></li>
-                <li class="active">全部</li>
+                <li class="active">{{getCategoryName curCategory}}</li>
             </ol>
             {{#unless user}}
             {{> mod-login-tip}}

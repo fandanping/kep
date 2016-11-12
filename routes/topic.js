@@ -4,10 +4,10 @@ var C = require('../controllers/topic.js');
 
 //主题详细信息
 router.get('/show/:id', C.showTopicDetail);
+//跳转新增主题页面
+router.get('/create', C.openCreateTopicPage);
 //新增主题
-router.get('/create', function(req, res){
-    res.render("add-topic");
-})
+router.post('/create', C.addTopic);
 //修改主题
 router.get('/edit/:id', function(req, res){
     res.render("add-topic");
