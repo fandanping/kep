@@ -6,10 +6,8 @@ var C = require('../controllers/user.js')
 //是否登陆
 router.use(C.isLogin);
 //跳转个人中心
-router.get('/:username', function(req, res){
-    res.render("personal");
-})
-//跳转个人中心
+router.get('/:username', C.openUserPage)
+//跳转用户信息设置
 router.get('/:username/setting', function(req, res){
     res.render("setting");
 })

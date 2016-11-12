@@ -1,3 +1,6 @@
+var dbUtils = require('../utils/dbUtils.js');
+var sql = require('../sqlmapping/user-sql.js');
+
 module.exports = {
     doLogout: function(req, res,next){
         req.session.destroy(function(err){
@@ -14,5 +17,52 @@ module.exports = {
             return false;
         }
         next();
+    },
+    openUserPage: function(req, res, next){
+        var data={};
+        dbUtils.execute(sql.QUERY_USER_BY_USERNAME, [req.params.username], function(err, results){
+            if(err){
+                return next(err);
+            }
+            var temp = JSON.parse(results)[0];
+            var personal = {
+                id: temp.id,
+                userName: temp.user_name,
+                signature: temp.signature
+            };
+            data.personal=personal;
+            dbUtils.execute(sql.QUERY_TOPIC_BY_USER_ID,[personal.id], function(err, results){
+                if(err){
+                    return next(err);
+                }
+                var ownTopicList =[];
+                JSON.parse(results).forEach(function(el){
+                    ownTopicList.push({
+                        id: el.id,
+                        title: el.title,
+                        pageView: el.page_view,
+                        replyNum: el.reply_num
+                    })
+                })
+                data.ownTopicList=ownTopicList;
+                dbUtils.execute(sql.QUERY_COMMENT_TOPIC_BY_USER_ID,[personal.id],function(err, results){
+                    if(err){
+                        return next(err);
+                    }
+                    var commentTopicList=[];
+                    JSON.parse(results).forEach(function(el){
+                        commentTopicList.push({
+                            id: el.id,
+                            title: el.title,
+                            pageView: el.page_view,
+                            replyNum: el.reply_num
+                        })
+                    })
+                    data.commentTopicList=commentTopicList;
+                    res.render("personal", data);
+                })
+            })
+        })
+
     }
 }
