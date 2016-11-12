@@ -3,22 +3,36 @@ var UUIDUtils = require('../utils/UUIDUtils.js');
 var sql = require('../sqlmapping/index-sql.js');
 
 module.exports = {
-    showIndex: function(req, res){
+    showIndex: function(req, res, next){
         var data = {};
-        dbUtils.execute(sql.SELECT_TOPIC_LIST, null, function(err, results){
+        if(req.params.name){
+            data.curCategory = req.params.name;
+        }else{
+            data.curCategory = "all";
+        }
+        var s=sql.SELECT_TOPIC_LIST,params=[];
+        if(data.curCategory!="all"){
+            s=sql.SELECT_TOPIC_LIST_BY_CATEGORY;
+            params.push(data.curCategory);
+        }
+        dbUtils.execute(s, params, function(err, results){
             if(err){
                 return next(err);
             }
             var rs = JSON.parse(results);
             var topicList = [];
             rs.forEach(function(el){
-                topicList.push({
+                var topic={
                     id: el.id,
                     title: el.title,
                     pageView: el.page_view,
                     replyNum: el.reply_num,
                     userName: el.user_name
-                })
+                };
+                if(el.category){
+                    topic.category=el.category;
+                }
+                topicList.push(topic);
             })
             data.topicList = topicList;
             dbUtils.execute(sql.SELECT_STATISTIC, null, function(err, results){
@@ -36,7 +50,7 @@ module.exports = {
             })
         })
     },
-    doRegister: function(req, res){
+    doRegister: function(req, res, next){
         dbUtils.execute(sql.CHECK_USER, [req.body.username], function(err, results){
             if(err){
                 return next(err);
@@ -53,7 +67,7 @@ module.exports = {
             }
         })
     },
-    doLogin: function(req, res){
+    doLogin: function(req, res, next){
         dbUtils.execute(sql.VALIDATE_USER, [req.body.username,req.body.password], function(err, results){
             if(err){
                 return next(err);

@@ -18,9 +18,11 @@
                         <a href="/user/{{userName}}" class="pull-left img-wrapper">
                             <img src="/img/photo.gif" width="30" height="30">
                         </a>
+                        {{#if category}}
                         <div class="pull-left category-wrapper">
-                            <a href="javascript:;" class="btn btn-default btn-xs">HTML/CSS</a>
+                            <a href="/category/{{category}}" class="btn btn-default btn-xs">{{getCategoryName category}}</a>
                         </div>
+                        {{/if}}
                         <div class="pull-left">
                             <a href="/topic/show/{{id}}">
                                 {{title}}

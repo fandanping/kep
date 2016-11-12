@@ -4,6 +4,7 @@ app.use(require('body-parser')());
 //引入session中间件
 var session = require('express-session');
 app.set('port', process.env.PORT || 3000);
+var config = require('./config');
 
 //routes
 var index = require('./routes/index');
@@ -26,6 +27,18 @@ var handlebars =require('express3-handlebars').create({
             this._index = index+1;
             //返回+1之后的结果
             return this._index;
+        },
+        //新增辅助方法，作用：激活选中菜单
+        setActiveCategory: function(v1, v2){
+            if(v1==v2){
+                return "active";
+            }else{
+                return "";
+            }
+        },
+        //新增辅助方法，作用：获取分类名
+        getCategoryName: function(key){
+            return config.category[key];
         }
     }
 });
@@ -44,6 +57,7 @@ app.use(express.static(__dirname+'/static'));
 //全局变量里存储user信息中间件
 app.use(function(req, res, next){
     res.locals.user = req.session.user;
+    res.locals.category = config.category;
     next();
 });
 

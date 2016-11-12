@@ -6,9 +6,7 @@ var C = require('../controllers/index.js');
 //首页
 router.get('/', C.showIndex);
 //首页分类切换
-router.get('/category/:name', function(req, res){
-    res.render("index");
-})
+router.get('/category/:name', C.showIndex);
 //跳转登录页面
 router.get('/login', function(req, res){
     res.render("login");
