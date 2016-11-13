@@ -1,7 +1,10 @@
 {{#section 'head'}}
+    <link rel="stylesheet" href="/vendor/summernote/summernote.css" />
     <link rel="stylesheet" href="/styles/detail.css"/>
 {{/section}}
 {{#section 'js'}}
+    <script src="/vendor/summernote/summernote.min.js"></script>
+    <script src="/vendor/summernote/lang/summernote-zh-CN.js"></script>
     <script src="/scripts/detail.js"></script>
 {{/section}}
 <div class="container container-detail">
@@ -21,7 +24,7 @@
                 </div>
                 <div class="panel-body">
                     <p>
-                       {{topic.content}}
+                        {{{topic.content}}}
                     </p>
                 </div>
                 <div class="panel-footer text-right">
@@ -30,7 +33,7 @@
                         <span class="glyphicon glyphicon-edit"></span>
                     </a>
                     {{/ifShowEditBtn}}
-                    <a href="#content" class="btn btn-default btn-sm" data-toggle="tooltip" data-original-title="回复">
+                    <a href="#contentBox" class="btn btn-default btn-sm" data-toggle="tooltip" data-original-title="回复">
                         <span class="glyphicon glyphicon-comment"></span>
                     </a>
                 </div>
@@ -62,7 +65,7 @@
                                 </h5>
                                 <div class="content">
                                     <p>
-                                       {{content}}
+                                        {{{content}}}
                                     </p>
                                 </div>
                             </div>
@@ -75,14 +78,14 @@
             </div>
             {{/if}}
             {{#if user}}
-            <div class="panel panel-default">
+            <div class="panel panel-default" id="contentBox">
                 <div class="panel-heading">
                     <h3 class="panel-title"><span class="glyphicon glyphicon-plus"></span><span>添加新回复</span></h3>
                 </div>
                 <div class="panel-body">
                     <form method="post" action="/topic/addComment">
                         <div class="form-group">
-                            <textarea id="content"  class="form-control" placeholder="请输入内容..." rows="10" name="content"></textarea>
+                            <textarea id="content" name="content"></textarea>
                         </div>
                         <input type="hidden" value="{{topic.id}}" name="topicId" />
                         <button type="submit" class="btn btn-primary pull-right">提交</button>
