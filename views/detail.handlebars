@@ -25,7 +25,12 @@
                     </p>
                 </div>
                 <div class="panel-footer text-right">
-                    <a href="javascript:;" class="btn btn-default btn-sm" data-toggle="tooltip" data-original-title="回复">
+                    {{#ifShowEditBtn user.id topic.userId}}
+                    <a href="/topic/edit/{{topic.id}}" class="btn btn-default btn-sm" data-toggle="tooltip" data-original-title="编辑">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                    {{/ifShowEditBtn}}
+                    <a href="#content" class="btn btn-default btn-sm" data-toggle="tooltip" data-original-title="回复">
                         <span class="glyphicon glyphicon-comment"></span>
                     </a>
                 </div>
@@ -41,7 +46,7 @@
                         <li class="media">
                             <div class="media-left">
                                 <a href="javascript:;">
-                                    <img src="img/photo.gif" width="30" height="30">
+                                    <img src="/img/photo.gif" width="30" height="30">
                                 </a>
                             </div>
                             <div class="media-body">

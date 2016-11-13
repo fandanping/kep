@@ -45,7 +45,6 @@ module.exports = {
                     if(err){
                         return next(err);
                     }
-                    console.log(results)
                     var rs = JSON.parse(results);
                     var otherTopicList = [];
                     rs.forEach(function(el){
@@ -55,7 +54,6 @@ module.exports = {
                         otherTopicList.push(othertopic);
                     })
                     data.otherTopicList = otherTopicList;
-                    console.log(data);
                     res.render('detail', data);
                 })
             })
@@ -92,5 +90,37 @@ module.exports = {
             }
             res.redirect('/topic/show/'+id);
         })
+    },
+    openEditTopicPage: function(req, res, next){
+        if(req.session.user){
+            dbUtils.execute(sql.SELECT_TOPIC_FOR_EDIT,[req.params.id,req.session.user.id], function(err, results){
+                if(err){
+                    return next(err);
+                }
+                if(JSON.parse(results).length){
+                    var temp = JSON.parse(results)[0];
+                    var topic = {
+                        id: temp.id,
+                        title: temp.title,
+                        content: temp.content,
+                        category: temp.category
+                    }
+                    var data={};
+                    var op={};
+                    for(p in config.category){
+                        op[p]=config.category[p];
+                    }
+                    delete op.all;
+                    data.op=op;
+                    data.topic=topic;
+                    res.render('add-topic', data);
+                }else{
+                    res.status(404);
+                    res.render('404');
+                }
+            })
+        }else{
+            res.redirect('/login');
+        }
     }
 }

@@ -8,10 +8,8 @@ router.get('/show/:id', C.showTopicDetail);
 router.get('/create', C.openCreateTopicPage);
 //新增主题
 router.post('/create', C.addTopic);
-//修改主题
-router.get('/edit/:id', function(req, res){
-    res.render("add-topic");
-})
+//跳转修改主题页面
+router.get('/edit/:id', C.openEditTopicPage);
 //新增回复
 router.post('/addComment', C.addComment)
 module.exports = router;

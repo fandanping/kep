@@ -39,6 +39,20 @@ var handlebars =require('express3-handlebars').create({
         //新增辅助方法，作用：获取分类名
         getCategoryName: function(key){
             return config.category[key];
+        },
+        //新增辅助方法，作用：修改主题页面，选中主题分类
+        setSelectedOption: function(v1, v2){
+            if(v1==v2){
+                return "selected";
+            }else{
+                return "";
+            }
+        },
+        //新增辅助方法，作用：判断是否显示修改帖子按钮
+        ifShowEditBtn: function(v1, v2, options){
+            if(v1==v2){
+                return options.fn(this);
+            }
         }
     }
 });
