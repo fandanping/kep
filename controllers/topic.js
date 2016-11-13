@@ -122,5 +122,13 @@ module.exports = {
         }else{
             res.redirect('/login');
         }
+    },
+    editTopic: function(req, res, next){
+        dbUtils.execute(sql.UPDATE_TOPIC,[req.body.title,req.body.content,req.body.category,req.params.id,req.session.user.id],function(err,results){
+            if(err){
+                return next(err);
+            }
+            res.redirect('/topic/show/'+req.params.id);
+        })
     }
 }
