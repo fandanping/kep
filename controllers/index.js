@@ -3,6 +3,12 @@ var UUIDUtils = require('../utils/UUIDUtils.js');
 var sql = require('../sqlmapping/index-sql.js');
 
 module.exports = {
+    openLoginPage: function(req, res, next){
+        res.render("login");
+    },
+    openRegisterPage: function(req, res, next){
+        res.render("register");
+    },
     showIndex: function(req, res, next){
         var data = {};
         if(req.params.name){
@@ -62,7 +68,7 @@ module.exports = {
                     if(err){
                         return next(err);
                     }
-                    res.redirect('/login');
+                    res.redirect('/register-success');
                 })
             }
         })
@@ -86,5 +92,8 @@ module.exports = {
             }
 
         })
+    },
+    openRegisterSuccess: function(req, res, next){
+        res.render('register-success');
     }
 }

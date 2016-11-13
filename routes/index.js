@@ -8,17 +8,14 @@ router.get('/', C.showIndex);
 //首页分类切换
 router.get('/category/:name', C.showIndex);
 //跳转登录页面
-router.get('/login', function(req, res){
-    res.render("login");
-})
+router.get('/login', C.openLoginPage)
 //跳转注册页面
-router.get('/register', function(req, res){
-    res.render("register");
-})
-
+router.get('/register', C.openRegisterPage)
 //执行注册
-router.post('/register', C.doRegister)
+router.post('/register', C.doRegister);
 //执行登录
-router.post('/login', C.doLogin)
+router.post('/login', C.doLogin);
+//跳转注册成功页面
+router.get('/register-success', C.openRegisterSuccess);
 
 module.exports = router;
