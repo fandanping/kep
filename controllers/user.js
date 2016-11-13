@@ -63,5 +63,36 @@ module.exports = {
                 })
             })
         })
+    },
+    openOwnTopic: function(req, res, next){
+        var data={};
+        dbUtils.execute(sql.QUERY_USER_BY_USERNAME, [req.params.username], function(err, results){
+            if(err){
+                return next(err);
+            }
+            var temp = JSON.parse(results)[0];
+            var personal = {
+                id: temp.id,
+                userName: temp.user_name,
+                signature: temp.signature
+            };
+            data.personal=personal;
+            dbUtils.execute(sql.QUERY_TOPIC_BY_USER_ID,[personal.id], function(err, results){
+                if(err){
+                    return next(err);
+                }
+                var ownTopicList =[];
+                JSON.parse(results).forEach(function(el){
+                    ownTopicList.push({
+                        id: el.id,
+                        title: el.title,
+                        pageView: el.page_view,
+                        replyNum: el.reply_num
+                    })
+                })
+                data.ownTopicList=ownTopicList;
+                res.render("own-topic", data);
+            })
+        })
     }
 }

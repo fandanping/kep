@@ -12,5 +12,7 @@ router.get('/:username/setting', function(req, res){
     res.render("setting");
 })
 //退出
-router.get('/:username/logout', C.doLogout)
+router.get('/:username/logout', C.doLogout);
+//展示用户发布帖子集合
+router.get('/:username/topics', C.openOwnTopic);
 module.exports = router;
