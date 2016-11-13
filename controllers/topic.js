@@ -12,51 +12,57 @@ module.exports = {
             if(err){
                 return next(err);
             }
-            var temp = JSON.parse(results)[0];
-            var topic={};
-            topic.id = temp.id;
-            topic.title = temp.title;
-            topic.createTime = temp.create_time;
-            topic.content = temp.content;
-            topic.pageView = temp.page_view;
-            topic.replyNum = temp.reply_num;
-            topic.praise = temp.praise;
-            topic.userId = temp.user_id;
-            topic.userName=temp.user_name;
-            topic.signature=temp.signature;
-            topic.category=temp.category;
-            data.topic = topic;
-            dbUtils.execute(sql.SELECT_COMMENT,[id], function(err, results){
-                if(err){
-                    return next(err);
-                }
-                var rs = JSON.parse(results);
-                var commentList = [];
-                rs.forEach(function(el){
-                    var comment={};
-                    comment.content=el.content;
-                    comment.topicId=el.topic_id;
-                    comment.createTime=el.create_time;
-                    comment.userName=el.user_name;
-                    commentList.push(comment);
-                })
-                data.commentList = commentList;
-                dbUtils.execute(sql. SELECT_OTHER_TOPIC,[topic.userId, topic.id], function(err, results){
+            if(JSON.parse(results).length){
+                var temp = JSON.parse(results)[0];
+                var topic={};
+                topic.id = temp.id;
+                topic.title = temp.title;
+                topic.createTime = temp.create_time;
+                topic.content = temp.content;
+                topic.pageView = temp.page_view;
+                topic.replyNum = temp.reply_num;
+                topic.praise = temp.praise;
+                topic.userId = temp.user_id;
+                topic.userName=temp.user_name;
+                topic.signature=temp.signature;
+                topic.category=temp.category;
+                data.topic = topic;
+                dbUtils.execute(sql.SELECT_COMMENT,[id], function(err, results){
                     if(err){
                         return next(err);
                     }
                     var rs = JSON.parse(results);
-                    var otherTopicList = [];
+                    var commentList = [];
                     rs.forEach(function(el){
-                        var othertopic={};
-                        othertopic.id=el.id;
-                        othertopic.title=el.title;
-                        otherTopicList.push(othertopic);
+                        var comment={};
+                        comment.content=el.content;
+                        comment.topicId=el.topic_id;
+                        comment.createTime=el.create_time;
+                        comment.userName=el.user_name;
+                        commentList.push(comment);
                     })
-                    data.otherTopicList = otherTopicList;
-                    res.render('detail', data);
+                    data.commentList = commentList;
+                    dbUtils.execute(sql. SELECT_OTHER_TOPIC,[topic.userId, topic.id], function(err, results){
+                        if(err){
+                            return next(err);
+                        }
+                        var rs = JSON.parse(results);
+                        var otherTopicList = [];
+                        rs.forEach(function(el){
+                            var othertopic={};
+                            othertopic.id=el.id;
+                            othertopic.title=el.title;
+                            otherTopicList.push(othertopic);
+                        })
+                        data.otherTopicList = otherTopicList;
+                        res.render('detail', data);
+                    })
                 })
-            })
+            }else{
+                res.status(404)
+                res.render('404');
+            }
+
         })
     },
     addComment: function(req, res, next){
