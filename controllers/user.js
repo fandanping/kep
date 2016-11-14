@@ -24,44 +24,50 @@ module.exports = {
             if(err){
                 return next(err);
             }
-            var temp = JSON.parse(results)[0];
-            var personal = {
-                id: temp.id,
-                userName: temp.user_name,
-                signature: temp.signature
-            };
-            data.personal=personal;
-            dbUtils.execute(sql.QUERY_TOPIC_BY_USER_ID,[personal.id], function(err, results){
-                if(err){
-                    return next(err);
-                }
-                var ownTopicList =[];
-                JSON.parse(results).forEach(function(el){
-                    ownTopicList.push({
-                        id: el.id,
-                        title: el.title,
-                        pageView: el.page_view,
-                        replyNum: el.reply_num
-                    })
-                })
-                data.ownTopicList=ownTopicList;
-                dbUtils.execute(sql.QUERY_COMMENT_TOPIC_BY_USER_ID,[personal.id],function(err, results){
+            if(JSON.parse(results).length){
+                var temp = JSON.parse(results)[0];
+                var personal = {
+                    id: temp.id,
+                    userName: temp.user_name,
+                    signature: temp.signature
+                };
+                data.personal=personal;
+                dbUtils.execute(sql.QUERY_TOPIC_BY_USER_ID,[personal.id], function(err, results){
                     if(err){
                         return next(err);
                     }
-                    var commentTopicList=[];
+                    var ownTopicList =[];
                     JSON.parse(results).forEach(function(el){
-                        commentTopicList.push({
+                        ownTopicList.push({
                             id: el.id,
                             title: el.title,
                             pageView: el.page_view,
                             replyNum: el.reply_num
                         })
                     })
-                    data.commentTopicList=commentTopicList;
-                    res.render("personal", data);
+                    data.ownTopicList=ownTopicList;
+                    dbUtils.execute(sql.QUERY_COMMENT_TOPIC_BY_USER_ID,[personal.id],function(err, results){
+                        if(err){
+                            return next(err);
+                        }
+                        var commentTopicList=[];
+                        JSON.parse(results).forEach(function(el){
+                            commentTopicList.push({
+                                id: el.id,
+                                title: el.title,
+                                pageView: el.page_view,
+                                replyNum: el.reply_num
+                            })
+                        })
+                        data.commentTopicList=commentTopicList;
+                        res.render("personal", data);
+                    })
                 })
-            })
+            }else{
+                res.status(404);
+                res.render('404');
+            }
+
         })
     },
     openOwnTopic: function(req, res, next){

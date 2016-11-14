@@ -53,7 +53,34 @@ var handlebars =require('express3-handlebars').create({
             if(v1==v2){
                 return options.fn(this);
             }
+        },
+        generatePage: function(pagination){
+            var page=pagination.curPage,limit=pagination.limit,total=pagination.total,pageCount=Math.ceil(total/limit);
+            /*if(pageCount){
+                var pageArr=[];
+                if(page==1){
+                    pageArr.push(1);
+                    for(var i=2;i<=5&&i<=pageCount;i++){
+                        pageArr.push(i);
+                    }
+                }else if(page==2){
+
+                }
+            }*/
+        },
+        //处理评论内容，给@[username] 添加a标签
+        setUserName: function(content){
+            var matchArr = content.match(/@[\w@]*/g);
+            if(matchArr instanceof Array){
+                matchArr.forEach(function(el){
+                    var reg = new RegExp(el, "g");
+                    var userName=el.replace('@','');
+                    content = content.replace(reg,"<a href='/user/"+userName+"'>"+el+"</a>");
+                })
+            }
+            return content;
         }
+
     }
 });
 app.engine('handlebars', handlebars.engine);

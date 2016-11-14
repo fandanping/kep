@@ -11,17 +11,20 @@ module.exports = {
     },
     showIndex: function(req, res, next){
         var data = {};
+        var limit=10;
+        var page=req.query.page?req.query.page:1;
         if(req.params.name){
             data.curCategory = req.params.name;
         }else{
             data.curCategory = "all";
         }
-        var s=sql.SELECT_TOPIC_LIST,params=[];
+        var s=sql.SELECT_TOPIC_LIST,ss=sql.SELECT_TOPIC_LIST_COUNT,params=[];
         if(data.curCategory!="all"){
             s=sql.SELECT_TOPIC_LIST_BY_CATEGORY;
+            ss=sql.SELECT_TOPIC_LIST_BY_CATEGORY_COUNT;
             params.push(data.curCategory);
         }
-        dbUtils.execute(s, params, function(err, results){
+        dbUtils.execute(s+" limit "+(page-1)*limit+","+limit, params, function(err, results){
             if(err){
                 return next(err);
             }
@@ -52,12 +55,22 @@ module.exports = {
                     commentCount: rs.totalreplies
                 }
                 data.statistic = statistic;
-                res.render('index', data);
+                dbUtils.execute(ss,params,function(err, results){
+                    if(err){
+                        return next(err);
+                    }
+                    data.pagination={
+                        limit: limit,
+                        curPage: page,
+                        total: JSON.parse(results)[0].count
+                    }
+                    res.render('index', data);
+                })
             })
         })
     },
     doRegister: function(req, res, next){
-        dbUtils.execute(sql.CHECK_USER, [req.body.username], function(err, results){
+        dbUtils.execute(sql.CHECK_USER, [req.body.username], function(err, results, next){
             if(err){
                 return next(err);
             }
@@ -74,7 +87,7 @@ module.exports = {
         })
     },
     doLogin: function(req, res, next){
-        dbUtils.execute(sql.VALIDATE_USER, [req.body.username,req.body.password], function(err, results){
+        dbUtils.execute(sql.VALIDATE_USER, [req.body.username,req.body.password], function(err, results, next){
             if(err){
                 return next(err);
             }

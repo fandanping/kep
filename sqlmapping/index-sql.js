@@ -4,5 +4,7 @@ module.exports = {
     SELECT_STATISTIC: 'select totalcommunity,totaltposts,totalreplies from statistic',
     INSERT_USER: 'insert into user(id,user_name,password,mail) values(?,?,?,?)',
     VALIDATE_USER: 'SELECT user_name,password,id,signature FROM USER WHERE USER_NAME=? AND PASSWORD=?',
-    CHECK_USER: 'select * from user where user_name=?'
+    CHECK_USER: 'select * from user where user_name=?',
+    SELECT_TOPIC_LIST_COUNT: 'select count(1) as count from topic t,user u where u.id=t.user_id',
+    SELECT_TOPIC_LIST_BY_CATEGORY_COUNT: 'select count(1) as count from topic t,user u where u.id=t.user_id and category=?'
 }
