@@ -95,7 +95,7 @@ module.exports = {
             })
         })
     },
-    doSetting: function(req, res, next){
+    openSettingPage: function(req, res, next){
         var username=req.params.username;
         var data = {};
         dbUtils.execute(sql.QUERY_USER_BY_USERNAME,[username], function(err, results){
@@ -118,7 +118,22 @@ module.exports = {
                 res.render('404');
             }
         })
-
+    },
+    saveSetting: function(req, res, next){
+        var s="", params=[];
+        if(req.body.password){
+            s=sql.UPDATE_USER_BY_USERNAME_INCLUDE_PASSWORD;
+            params=[req.body.signature,req.body.password,req.params.username];
+        }else{
+            s=sql.UPDATE_USER_BY_USERNAME;
+            params=[req.body.signature,req.params.username];
+        }
+        dbUtils.execute(s, params, function(err,results){
+            if(err){
+                return next(err);
+            }
+            res.redirect('/user/'+req.params.username);
+        })
 
     }
 }
