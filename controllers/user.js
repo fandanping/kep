@@ -72,6 +72,8 @@ module.exports = {
     },
     openOwnTopic: function(req, res, next){
         var data={};
+        var page=req.query.page?req.query.page:1;
+        var limit=10;
         dbUtils.execute(sql.QUERY_USER_BY_USERNAME, [req.params.username], function(err, results){
             if(err){
                 return next(err);
@@ -83,7 +85,7 @@ module.exports = {
                 signature: temp.signature
             };
             data.personal=personal;
-            dbUtils.execute(sql.QUERY_TOPIC_BY_USER_ID,[personal.id], function(err, results){
+            dbUtils.execute(sql.QUERY_ALL_TOPIC_BY_USER_ID+" limit "+(page-1)*limit+","+limit,[personal.id], function(err, results){
                 if(err){
                     return next(err);
                 }
@@ -97,7 +99,17 @@ module.exports = {
                     })
                 })
                 data.ownTopicList=ownTopicList;
-                res.render("own-topic", data);
+                dbUtils.execute(sql.QUERY_ALL_TOPIC_BY_USER_ID_COUNT,[personal.id],function(err,results){
+                    if(err){
+                        return next(err);
+                    }
+                    data.pagination={
+                        limit: limit,
+                        curPage: page,
+                        total: JSON.parse(results)[0].count
+                    }
+                    res.render("own-topic", data);
+                })
             })
         })
     },
