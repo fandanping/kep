@@ -5,5 +5,6 @@ module.exports = {
     INSERT_COMMENT: 'insert into comment(id,content,topic_id,user_id,create_time) values(?,?,?,?,?)',
     INSERT_TOPIC: 'insert into topic(id,title,create_time,content,user_id,category) values(?,?,?,?,?,?)',
     SELECT_TOPIC_FOR_EDIT: 'select id,title,content,category from topic where id=? and user_id=?',
-    UPDATE_TOPIC: 'update topic set title=?,content=?,category=? where id=? and user_id=?'
+    UPDATE_TOPIC: 'update topic set title=?,content=?,category=? where id=? and user_id=?',
+    UPDATE_TOPIC_PAGEVIEW: 'update topic set page_view=page_view+1 where id=?'
 }

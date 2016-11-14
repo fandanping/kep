@@ -55,6 +55,11 @@ module.exports = {
                             otherTopicList.push(othertopic);
                         })
                         data.otherTopicList = otherTopicList;
+                        dbUtils.execute(sql.UPDATE_TOPIC_PAGEVIEW,[id], function(err, results){
+                            if(err){
+                                return next(err);
+                            }
+                        })
                         res.render('detail', data);
                     })
                 })
