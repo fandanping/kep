@@ -94,5 +94,31 @@ module.exports = {
                 res.render("own-topic", data);
             })
         })
+    },
+    doSetting: function(req, res, next){
+        var username=req.params.username;
+        var data = {};
+        dbUtils.execute(sql.QUERY_USER_BY_USERNAME,[username], function(err, results){
+            if(err){
+                return next(err);
+            }
+            if(JSON.parse(results).length){
+                var temp = JSON.parse(results)[0];
+                var u={};
+                u.id = temp.id;
+                u.username=temp.user_name;
+                u.signature=temp.signature;
+                u.password=temp.password;
+                u.mail=temp.mail;
+                data.u = u;
+                console.log(data)
+                res.render('setting', data);
+            }else{
+                res.status(404)
+                res.render('404');
+            }
+        })
+
+
     }
 }
