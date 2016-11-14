@@ -54,19 +54,47 @@ var handlebars =require('express3-handlebars').create({
                 return options.fn(this);
             }
         },
+        //新增辅助方法，作用：生成分页dom结构
         generatePage: function(pagination){
-            var page=pagination.curPage,limit=pagination.limit,total=pagination.total,pageCount=Math.ceil(total/limit);
-            /*if(pageCount){
+            var page=Number(pagination.curPage),limit=pagination.limit,total=pagination.total,pageCount=Math.ceil(total/limit);
+            if(pageCount){
                 var pageArr=[];
-                if(page==1){
-                    pageArr.push(1);
-                    for(var i=2;i<=5&&i<=pageCount;i++){
+                if(pageCount>5){
+                    if(page==1||page==2){
+                        pageArr=[1,2,3,4,5];
+                    }else if(page==pageCount||page==pageCount-1){
+                        pageArr=[pageCount-4,pageCount-3,pageCount-2,pageCount-1,pageCount];
+                    }else{
+                        pageArr=[page-2,page-1,page,page+1,page+2];
+                    }
+                }else{
+                    for(var i=1;i<=pageCount;i++){
                         pageArr.push(i);
                     }
-                }else if(page==2){
-
                 }
-            }*/
+                var s='';
+                var firstPage='<li><a href="?page=1">&laquo;</a></li>';
+                var firstDisabled='<li class="disabled"><a href="javascript:;">&laquo;</a></li>';
+                var lastPage='<li><a href="?page='+pageCount+'">&raquo;</a></li>';
+                var lastDisabled='<li class="disabled"><a href="javascript:;">&raquo;</a></li>';
+                for(var j=0;j<pageArr.length;j++){
+                    if(page==pageArr[j]){
+                        s+='<li class="active"><a href="?page='+pageArr[j]+'">'+pageArr[j]+'</a></li>';
+                    }else{
+                        s+='<li><a href="?page='+pageArr[j]+'">'+pageArr[j]+'</a></li>';
+                    }
+                }
+                if(pageCount==1){
+                    return firstDisabled+s+lastDisabled;
+                }else if(page==1){
+                    return firstDisabled+s+lastPage;
+                }else if(page==pageCount){
+                    return firstPage+s+lastDisabled;
+                }else{
+                    return firstPage+s+lastPage;
+                }
+            }
+
         },
         //处理评论内容，给@[username] 添加a标签
         setUserName: function(content){
