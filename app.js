@@ -154,3 +154,8 @@ app.use(function(req, res){
 app.listen(app.get('port'), function(){
     console.log("server start");
 })
+
+/** 捕获未被业务catch的所有剩余的异常或错误，防止nodejs服务停止 **/
+process.on('uncaughtException', function(err) {
+    console.error(err);
+});
